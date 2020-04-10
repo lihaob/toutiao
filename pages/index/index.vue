@@ -60,6 +60,11 @@
 		onLoad() {
 
 		},
+		onNavigationBarSearchInputClicked(){
+			uni.navigateTo({
+				url:'../search/search'
+			})
+		},
 		methods: {
 			changeTab(index){
 				if (this.tabIndex === index){

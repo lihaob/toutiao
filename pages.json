@@ -39,8 +39,37 @@
 			"style": {
 				
 			}
-		}
-	],
+		},
+        {
+            "path" : "pages/search/search",
+            "style" : {
+				"navigationBarBackgroundColor":"#ffffff",
+				"app-plus":{
+					//导航栏
+					"titleNView":{
+						"searchInput":{
+							"align":"left",
+							"backgroundColor":"#F5F4F2",
+							"borderRadius":"15px",
+							"disabled":false,
+							"placeholder":"新闻搜索",
+							"placeholderColor":"#6d6c67"
+						},
+						"buttons":[
+							{
+								"color":"#333333",
+								"colorPressed":"#333333",
+								"float":"right",
+								"fontSize":"14px",
+								"fontSrc":"/static/iconfont.ttf",
+								"text":"搜索"
+							}
+						]
+					}
+				}
+			}
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "今日头条",
