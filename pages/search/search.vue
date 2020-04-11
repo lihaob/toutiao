@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<template v-if="searchList.length===0">
-			<view class="py-2 font-md">搜索历史</view>
+			<view class="mx-2 py-2 font-md">搜索历史</view>
 			<view class="flex flex-wrap">
 				<view class="border rounded font mx-2 my-1 px-2" 
 				@click="" hover-class="bg-light" v-for="(item,index) in list" :key="index">{{item}}</view>
