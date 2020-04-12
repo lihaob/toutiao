@@ -12,8 +12,8 @@
 		:style="'height:'+scrollH+'px;'">
 			<swiper-item v-for="(item1,index1) in tabBars" :key="index1">
 				<scroll-view scroll-y="true" :style="'height:'+scrollH+'px;'">
-					<template v-if="news_list.return_count>0">
-						<block v-for="(item2,index2) in news_list.data" :key="index2">
+					<template v-if="news_list[index1].list.return_count>0">
+						<block v-for="(item2,index2) in news_list[index1].list.data" :key="index2">
 							<common-list :item="item2" :index="index2"></common-list>
 							<divider></divider>
 						</block>
@@ -114,6 +114,15 @@
 					this.scrollH=res.windowHeight-uni.upx2px(100);
 				}
 			})
+			var arr = []
+			for (let i = 0; i < this.tabBars.length; i++) {
+				arr.push({
+					loadmore: "上拉加载更多",
+					list: [],
+					firstLoad: false
+				})
+			}
+			this.news_list = arr
 			this.getData();
 		},
 		onNavigationBarSearchInputClicked(){
@@ -134,20 +143,23 @@
 				this.getData();
 			},
 			getData(){
-/* 				console.log("https://m.toutiao.com/list/?ac=wap&format=json_raw&tag="+this.tabBars[this.tabIndex].type+"&as=A175ADC1C1BAE7E&cp=5D118A3E877E8E1&_signature=f60bLAAAIr6R60RntmQLRn-tGz")
- */				uni.request({
-					url:"https://m.toutiao.com/list/?ac=wap&format=json_raw&tag="+this.tabBars[this.tabIndex].type+"&as=A175ADC1C1BAE7E&cp=5D118A3E877E8E1&_signature=f60bLAAAIr6R60RntmQLRn-tGz",
-					success: (res) => {
-						console.log("success")
-						this.news_list=res.data;
-					},
-					fail: ()=>{
-						console.log("error")
-					},
-					complete: ()=>{
-						console.log("completed");
-					}
-				})
+ 				//console.log("https://m.toutiao.com/list/?ac=wap&format=json_raw&tag="+this.tabBars[this.tabIndex].type+"&as=A175ADC1C1BAE7E&cp=5D118A3E877E8E1&_signature=f60bLAAAIr6R60RntmQLRn-tGz")
+				let i = this.tabIndex
+				if (this.news_list[i].firstLoad == false) {
+					uni.showLoading({
+						title: "加载中...",
+						mask: false
+					})
+					this.$H.get("/?ac=wap&format=json_raw&tag="+this.tabBars[i].type+"&as=A175ADC1C1BAE7E").then(
+						res=>{
+							//console.log("/?ac=wap&format=json_raw&tag="+this.tabBars[i].type+"&as=A175ADC1C1BAE7E")
+							let [err,result] = res
+							this.news_list[i].list = result.data
+							uni.hideLoading()
+						})
+				}
+				this.news_list[i].firstLoad = true
+
 			}
 		}
 	}
